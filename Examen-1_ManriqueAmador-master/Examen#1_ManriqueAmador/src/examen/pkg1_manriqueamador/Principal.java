@@ -188,6 +188,8 @@ public class Principal extends javax.swing.JFrame {
         jLabel70 = new javax.swing.JLabel();
         tf_fecha1 = new javax.swing.JTextField();
         cb_modificarOBJ = new javax.swing.JComboBox<>();
+        cb = new javax.swing.JComboBox<>();
+        jLabel49 = new javax.swing.JLabel();
         eliminarobjeto = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaObjetos = new javax.swing.JTable();
@@ -933,14 +935,25 @@ public class Principal extends javax.swing.JFrame {
 
         cb_modificarOBJ.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Elija>" }));
 
+        cb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel49.setText("Dueñoi");
+
         javax.swing.GroupLayout modificarobjetoLayout = new javax.swing.GroupLayout(modificarobjeto);
         modificarobjeto.setLayout(modificarobjetoLayout);
         modificarobjetoLayout.setHorizontalGroup(
             modificarobjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(modificarobjetoLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(cb_modificarOBJ, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(334, Short.MAX_VALUE))
+                .addGroup(modificarobjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(modificarobjetoLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(cb_modificarOBJ, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(modificarobjetoLayout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addComponent(jLabel49)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(308, Short.MAX_VALUE))
             .addGroup(modificarobjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(modificarobjetoLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -1033,7 +1046,11 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(modificarobjetoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cb_modificarOBJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
+                .addGroup(modificarobjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel49))
+                .addGap(88, 88, 88))
             .addGroup(modificarobjetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(modificarobjetoLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -1439,7 +1456,7 @@ public class Principal extends javax.swing.JFrame {
             mm.addElement(p);
         }
         cb_modificarPER.setModel(mm);
-
+        cb.setModel(mm);
         CB_amigosU.setModel(mm);
         DefaultComboBoxModel mm1 = new DefaultComboBoxModel();
         for (Objeto o : objetos) {
@@ -1447,7 +1464,7 @@ public class Principal extends javax.swing.JFrame {
         }
         cb_modificarOBJ.setModel(mm1);
         cb_objetos.setModel(mm1);
-
+        
         DefaultTableModel mt = (DefaultTableModel) tablaPersonas.getModel();
         while (mt.getRowCount() > 0) {
             mt.removeRow(0);
@@ -1688,8 +1705,8 @@ public class Principal extends javax.swing.JFrame {
             String cod = JOptionPane.showInputDialog(this, "Ingrese palabra de codificacion");
             mensajeCODIFcesar = cifradoCesar(mensaje, valor);
             mensajeCODIFvig = vigenere(mensajeCODIFcesar,cod);
-            
-            mensaje += "\n->Codificacion\n" + mensajeCODIFvig;
+            mensajeCODIFtt = columnar(mensajeCODIFvig,cod);
+            mensaje += "\n->Codificacion\n" + mensajeCODIFvig.substring(0,mensaje.length()).toUpperCase();
             mensaje += "\n->Descodificacion\n" + DEScifradoCesar(mensajeCODIFcesar,valor);
         }
         ta_mensaje.setText(mensaje);
@@ -1768,6 +1785,50 @@ public class Principal extends javax.swing.JFrame {
         });
     }
 
+        
+    public String columnar(String mensaje, String codigo){
+        String retorno = "";
+        String [] arreglo = new String [codigo.length()];
+        int cont = 0;
+        for (int i = 0; i < mensaje.length(); i++) {
+            if(cont<codigo.length()){
+                arreglo[cont] += mensaje.charAt(i)+"";
+                cont++;
+            }else{
+                cont=0;
+                arreglo[cont] += mensaje.charAt(i)+"";
+                
+            }
+        }
+        for (int i = 0; i < codigo.length(); i++) {
+            if(arreglo[i]!=null && !arreglo[i].equals("null")){
+                retorno+=arreglo[i];
+            }
+            
+        }
+        return retorno;
+    }
+    
+    public String INVcolumnar(String mensaje, String codigo){
+        String retorno = "";
+        String [] arreglo = new String [codigo.length()];
+        int cont = 0;
+        for (int i = 0; i < mensaje.length(); i++) {
+            if(cont<codigo.length()){
+                arreglo[cont] += mensaje.charAt(i)+"";
+                cont++;
+            }else{
+                cont=0;
+                arreglo[cont] += mensaje.charAt(i)+"";
+                
+            }
+        }
+        for (int i = 0; i < codigo.length(); i++) {
+            retorno+=arreglo[i];
+        }
+        return retorno;
+    }
+    
     public String cifradoCesar(String aCodificar, int codigo) {
 
         String codificado = "";
@@ -1819,7 +1880,7 @@ public class Principal extends javax.swing.JFrame {
                 cod = codigo.charAt(cont)-64;
                 codificado+=(char) (mensaje.charAt(i)+cod);
             }
-            codificado+=mensaje.charAt(i);
+            
         }
         return codificado;
     }
@@ -1874,6 +1935,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JRadioButton ZAPATO;
     private javax.swing.JPanel agregarobjeto;
     private javax.swing.JPanel agregarpersonas;
+    private javax.swing.JComboBox<String> cb;
     private javax.swing.JComboBox<String> cb_area;
     private javax.swing.JComboBox<String> cb_area1;
     private javax.swing.JComboBox<String> cb_modificarOBJ;
@@ -1927,6 +1989,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
